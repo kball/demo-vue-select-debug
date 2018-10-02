@@ -9,31 +9,38 @@
         An example of debugging
       </h2>
       <div class="links">
-        <a
-          href="https://nuxtjs.org/"
-          target="_blank"
-          class="button--green">Documentation</a>
-        <a
-          href="https://github.com/nuxt/nuxt.js"
-          target="_blank"
-          class="button--grey">GitHub</a>
+        <no-ssr>
+          <v-select
+            v-model="selected"
+            :options="['foo','bar']"
+          />
+        </no-ssr>
       </div>
     </div>
   </section>
 </template>
 
 <script>
-import Logo from '~/components/Logo.vue'
+import NoSSR from 'vue-no-ssr'
+const components = {
+  'no-ssr': NoSSR
+}
+
+if (process.browser) {
+  components['v-select'] = () => import('vue-select')
+}
 
 export default {
-  components: {
-    Logo
+  components,
+  data() {
+    return {
+      selected: null
+    }
   }
 }
 </script>
 
 <style>
-
 .container {
   min-height: 100vh;
   display: flex;
